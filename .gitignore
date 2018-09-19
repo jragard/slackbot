@@ -1,5 +1,5 @@
 commands.env
 .vscode/
 .env
-starterbot
+starterbot/
 settings.pyc
