@@ -75,10 +75,11 @@ def handle_command(command, channel):
         settings.logger.info(response)
     if command == "help":
         response = """Here is a list of commands:
-        exit
-        ping
-        help
-        do"""
+        exit - Shut me down
+        ping - Check my uptime
+        help - Display a list of commands for me
+        do - Tell me to do something
+        bitcoin - Ask me the bitcoin price"""
         settings.logger.info(command)
         settings.logger.info(response)
     if command == "bitcoin":
