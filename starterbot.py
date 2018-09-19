@@ -1,12 +1,16 @@
 import time
+import os
 import re
-import settings
 import signal
 import requests
+import logging
+from dotenv import load_dotenv
 from slackclient import SlackClient
 
-# instantiate Slack client
-slack_client = SlackClient(settings.SLACK_BOT_TOKEN)
+# load_dotenv()
+# SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
+# slack_client = SlackClient(SLACK_BOT_TOKEN)
+logger = logging.getLogger(__name__)
 
 # starterbot's user ID in Slack: value is assigned after the bot starts up
 starterbot_id = None
@@ -16,9 +20,12 @@ RTM_READ_DELAY = 1  # 1 second delay between reading from RTM
 EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 exit_flag = False
+start_time = None
+slack_client = None
 
 
 def parse_bot_commands(slack_events):
+    global starterbot_id
     """
         Parses a list of events coming from the Slack RTM API to find bot
         commands. If a bot command is found, this function returns a tuple of
@@ -52,7 +59,7 @@ def handle_command(command, channel):
     """
     print "channel", channel
     global exit_flag
-    # Default response is help text for the user
+
     default_response = """Not sure what you mean.
     Try *{}*.""".format(EXAMPLE_COMMAND)
 
@@ -65,14 +72,14 @@ def handle_command(command, channel):
         response = res + " " + res + " " + res
     if command == "exit":
         response = "See ya later!"
-        settings.logger.info(command)
-        settings.logger.info('Starterbot is Disconnecting')
+        logger.info(command)
+        logger.info('Starterbot is Disconnecting')
         exit_flag = True
     if command == "ping":
         response = "ryanbot is active, uptime = {} seconds".format(
             time.time() - start_time)
-        settings.logger.info(command)
-        settings.logger.info(response)
+        logger.info(command)
+        logger.info(response)
     if command == "help":
         response = """Here is a list of commands:
         exit - Shut me down
@@ -80,23 +87,16 @@ def handle_command(command, channel):
         help - Display a list of commands for me
         do - Tell me to do something
         bitcoin - Ask me the bitcoin price"""
-        settings.logger.info(command)
-        settings.logger.info(response)
+        logger.info(command)
+        logger.info(response)
     if command == "bitcoin":
         r = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
         response = "The current bitcoin price in USD is {}".format(
             r.json()['bpi']['USD']['rate'])
-        settings.logger.info(command)
-        settings.logger.info(response)
+        logger.info(command)
+        logger.info(response)
 
-    # Sends the response back to the channel
-    slack_client.api_call(
-        "chat.postMessage",
-        channel=channel,
-        text=response or default_response
-    )
-
-    return response
+    return response or default_response
 
 
 def signal_handler(sig_num, frame):
@@ -113,40 +113,87 @@ def signal_handler(sig_num, frame):
 
     signame = dict((k, v) for v, k in reversed(sorted(signal.__dict__.items()))
                    if v.startswith('SIG') and not v.startswith('SIG_'))
-    settings.logger.debug(
+    logger.debug(
         """Received {}, Disconnecting, uptime = {} seconds""".format(
             signame[sig_num], time.time() - start_time))
     exit_flag = True
-    return exit_flag
 
 
-if __name__ == "__main__":
+def setup_logging():
+    logging_level = os.getenv('LOGGING_LEVEL')
+    # sets up logger
+    logger = logging.getLogger()
+
+    # logger.setLevel(logging.DEBUG)
+    logger.setLevel(int(logging_level))
+
+    formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
+
+    file_handler = logging.FileHandler('slackbot.log')
+    file_handler.setFormatter(formatter)
+
+    stream_handler = logging.StreamHandler()
+
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
+
+
+def main():
+    global start_time
+    global slack_client
+    global starterbot_id
+    load_dotenv()
+    setup_logging()
+
+    SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
+
     start_time = time.time()
+
+    # instantiate Slack client
+
+    slack_client = SlackClient(SLACK_BOT_TOKEN)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
 
-    if slack_client.rtm_connect(with_team_state=False):
-        print("Starter Bot connected and running!")
-        settings.logger.info('StarterBot connected')
+    try:
+        if slack_client.rtm_connect(with_team_state=False):
+            print("Starter Bot connected and running!")
+            logger.info('StarterBot connected')
 
-        # Read bot's user ID by calling Web API method `auth.test`
-        starterbot_id = slack_client.api_call("auth.test")["user_id"]
+            # Read bot's user ID by calling Web API method `auth.test`
+            starterbot_id = slack_client.api_call("auth.test")["user_id"]
 
-        # Send a message to a channel announcing bot is online
-        connect_message = "I am online!"
+            # Send a message to a channel announcing bot is online
+            connect_message = "I am online!"
 
-        slack_client.api_call(
-            "chat.postMessage",
-            channel="CCD7USCR0",
-            text=connect_message
-        )
+            slack_client.api_call(
+                "chat.postMessage",
+                channel="CCD7USCR0",
+                text=connect_message
+            )
 
-        while exit_flag is False:
-            command, channel = parse_bot_commands(slack_client.rtm_read())
-            if command:
-                handle_command(command, channel)
-            time.sleep(RTM_READ_DELAY)
+            while exit_flag is False:
+                try:
+                    command, channel = parse_bot_commands(
+                        slack_client.rtm_read())
+                    if command:
+                        response = handle_command(command, channel)
+                        # Sends the response back to the channel
+                        slack_client.api_call(
+                            "chat.postMessage",
+                            channel=channel,
+                            text=response
+                        )
+                    time.sleep(RTM_READ_DELAY)
+                except Exception as e:
+                    logger.debug(e)
+                    time.sleep(5)
+        else:
+            print("Connection failed. Exception traceback printed above")
+    except Exception as failed_connection:
+        logger.debug(failed_connection)
 
-    else:
-        print("Connection failed. Exception traceback printed above")
+
+if __name__ == "__main__":
+    main()
