@@ -1,0 +1,30 @@
+Log File too long, overwriting
+                --------------------------------
+              nnectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 260
+DEBUG:root:RTM connected
+INFO:root:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+DEBUG:root:Received SIGINT, Disconnecting, uptime = 8.26695895195 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 256
+DEBUG:root:RTM connected
+INFO:root:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+INFO:root:ping
+INFO:root:ryanbot is active, uptime = 60.6081819534 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 191
+INFO:root:ping
+INFO:root:ryanbot is active, uptime = 2262.12518501 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 189
+INFO:root:exit
+INFO:root:Starterbot is Disconnecting, uptime = 77.1856639385 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 163
+INFO:root:exit
+INFO:root:Starterbot is Disconnecting, uptime = 2278.53936791 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 163

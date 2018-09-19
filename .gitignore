@@ -1,3 +1,5 @@
-commands.txt
+commands.env
 .vscode/
 .env
+starterbot
+settings.pyc
