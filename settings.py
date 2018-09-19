@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import logging
 
 dotenv_path = join(dirname(__file__), 'commands.env')
-print 'dotenv path', dotenv_path
+# print 'dotenv path', dotenv_path
 load_dotenv('./commands.env')
 
 SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')

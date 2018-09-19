@@ -16,7 +16,7 @@ starterbot_id = None
 RTM_READ_DELAY = 1  # 1 second delay between reading from RTM
 EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
-exit_flag = True
+exit_flag = False
 
 
 def parse_bot_commands(slack_events):
@@ -51,6 +51,7 @@ def handle_command(command, channel):
     """
         Executes a bot command if the command is known
     """
+    print "channel", channel
     global exit_flag
     # Default response is help text for the user
     default_response = """Not sure what you mean.
@@ -66,10 +67,8 @@ def handle_command(command, channel):
     if command == "exit":
         response = "See ya later!"
         settings.logger.info(command)
-        settings.logger.info('Starterbot is Disconnecting, uptime = {} seconds'.format(
-            time.time() - start_time
-        ))
-        exit_flag = False
+        settings.logger.info('Starterbot is Disconnecting')
+        exit_flag = True
     if command == "ping":
         response = "ryanbot is active, uptime = {} seconds".format(
             time.time() - start_time)
@@ -80,20 +79,22 @@ def handle_command(command, channel):
         exit
         ping
         help
-        do
-                   """
+        do"""
         settings.logger.info(command)
         settings.logger.info(response)
 
     # Sends the response back to the channel
-    slack_client.api_call(
+    post = slack_client.api_call(
         "chat.postMessage",
         channel=channel,
         text=response or default_response
     )
+    # print 'post', post
+    return response
 
 def signal_handler(sig_num, frame):
     global exit_flag
+    
     """
     This is a handler for SIGTERM and SIGINT. Other signals can be mapped here
     as well (SIGHUP?) Basically it just sets a global flag, and main() will
@@ -106,7 +107,8 @@ def signal_handler(sig_num, frame):
     signame = dict((k, v) for v, k in reversed(sorted(signal.__dict__.items()))
                    if v.startswith('SIG') and not v.startswith('SIG_'))
     settings.logger.debug('Received {}, Disconnecting, uptime = {} seconds'.format(signame[sig_num], time.time() - start_time))
-    exit_flag = False
+    exit_flag = True
+    return exit_flag
 
 
 if __name__ == "__main__":
@@ -131,7 +133,7 @@ if __name__ == "__main__":
         #     text=connect_message
         # )
 
-        while exit_flag is True:
+        while exit_flag is False:
             command, channel = parse_bot_commands(slack_client.rtm_read())
             if command:
                 handle_command(command, channel)
