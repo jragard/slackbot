@@ -2,4 +2,4 @@ commands.env
 .vscode/
 .env
 starterbot/
-.pyc
+*.pyc
