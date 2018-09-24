@@ -120,8 +120,8 @@ def setup_logging():
     # load_dotenv()
     # logging_level = os.getenv('LOGGING_LEVEL')
     # log_level = logging_level.encode('utf-8')
-    print 'logging_level type', type(logging_level)
-    print 'log_level type', type(log_level)
+    # print 'logging_level type', type(logging_level)
+    # print 'log_level type', type(log_level)
     # sets up logger
     logger = logging.getLogger()
 
