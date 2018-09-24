@@ -119,11 +119,13 @@ def signal_handler(sig_num, frame):
 def setup_logging():
     load_dotenv()
     logging_level = os.getenv('LOGGING_LEVEL')
+    log_level = logging_level.encode('utf-8')
+    
     # sets up logger
     logger = logging.getLogger()
 
     # logger.setLevel(logging.DEBUG)
-    logger.setLevel(logging_level)
+    logger.setLevel(int(log_level))
 
     formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 
