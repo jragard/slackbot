@@ -79,3 +79,12 @@ DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
 DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 163
 DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 2.50983405113 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 256
+DEBUG:root:RTM connected
+INFO:__main__:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 164
+DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 13.6347401142 seconds

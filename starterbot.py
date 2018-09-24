@@ -7,9 +7,6 @@ import logging
 from dotenv import load_dotenv
 from slackclient import SlackClient
 
-# load_dotenv()
-# SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
-# slack_client = SlackClient(SLACK_BOT_TOKEN)
 logger = logging.getLogger(__name__)
 
 # starterbot's user ID in Slack: value is assigned after the bot starts up
@@ -120,8 +117,8 @@ def signal_handler(sig_num, frame):
 
 
 def setup_logging():
-    global logging_level
-    # logging_level = os.getenv('LOGGING_LEVEL')
+    load_dotenv()
+    logging_level = os.getenv('LOGGING_LEVEL')
     # sets up logger
     logger = logging.getLogger()
 
@@ -147,7 +144,7 @@ def main():
     setup_logging()
 
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
-    logging_level = os.getenv('LOGGING_LEVEL')
+    
     start_time = time.time()
 
     # instantiate Slack client
