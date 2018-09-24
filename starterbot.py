@@ -123,7 +123,7 @@ def setup_logging():
     logger = logging.getLogger()
 
     # logger.setLevel(logging.DEBUG)
-    logger.setLevel(int(logging_level))
+    logger.setLevel(logging_level)
 
     formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 
