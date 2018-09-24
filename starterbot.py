@@ -120,7 +120,8 @@ def signal_handler(sig_num, frame):
 
 
 def setup_logging():
-    logging_level = os.getenv('LOGGING_LEVEL')
+    global logging_level
+    # logging_level = os.getenv('LOGGING_LEVEL')
     # sets up logger
     logger = logging.getLogger()
 
@@ -146,7 +147,7 @@ def main():
     setup_logging()
 
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
-
+    logging_level = os.getenv('LOGGING_LEVEL')
     start_time = time.time()
 
     # instantiate Slack client
