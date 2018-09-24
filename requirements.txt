@@ -6,3 +6,5 @@ six==1.11.0
 slackclient==1.2.1
 urllib3==1.23
 websocket-client==0.52.0
+python-dotenv==0.9.1
+
