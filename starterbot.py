@@ -120,12 +120,14 @@ def setup_logging():
     load_dotenv()
     logging_level = os.getenv('LOGGING_LEVEL')
     log_level = logging_level.encode('utf-8')
-    
+    print 'logging_level type', type(logging_level)
+    print 'log_level type', type(log_level)
     # sets up logger
     logger = logging.getLogger()
 
     # logger.setLevel(logging.DEBUG)
-    logger.setLevel(int(log_level))
+    # logger.setLevel(int(log_level))
+    logger.setLevel(10)
 
     formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 
@@ -146,7 +148,7 @@ def main():
     setup_logging()
 
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
-    
+    print 'SLACKBOT TOKEN type', type(SLACK_BOT_TOKEN)
     start_time = time.time()
 
     # instantiate Slack client
