@@ -4,6 +4,7 @@ import re
 import signal
 import requests
 import logging
+import random
 from dotenv import load_dotenv
 from slackclient import SlackClient
 
@@ -62,9 +63,9 @@ def handle_command(command, channel):
 
     # Finds and executes the given command, filling in response
     response = None
+    attachments = None
     # This is where you start to implement more commands
     if command.startswith(EXAMPLE_COMMAND):
-        # response = "Sure...write some more code then I can do that!"
         res = command[3:]
         response = res + " " + res + " " + res
     elif command == "exit":
@@ -93,12 +94,27 @@ def handle_command(command, channel):
         logger.info(command)
         logger.info(response)
     elif command == "loops":
-        response = "https://i.kym-cdn.com/photos/images/original/001/393/657/195.jpg"
+        loops_list = ["https://i.imgur.com/YlfxtAY.jpg",
+                      "https://i.imgur.com/Ced9EYj.jpg",
+                      "https://i.imgur.com/6CveK8A.jpg",
+                      "https://i.imgur.com/CRkrxO9.jpg",
+                      "https://i.imgur.com/adVaC1K.jpg",
+                      "https://i.kym-cdn.com/photos/images/newsfeed/001/396/303/e34.png",
+                      "https://i.kym-cdn.com/photos/images/newsfeed/001/393/674/922.jpg_large",
+                      "https://i.kym-cdn.com/photos/images/newsfeed/001/395/618/35d.png",
+                      "https://i.imgur.com/Fuax18P.jpg", "https://i.imgflip.com/2g5iig.jpg",
+                      "https://i.kym-cdn.com/photos/images/newsfeed/001/393/662/8dc.jpg",
+                      "https://i.chzbgr.com/full/9206136064/h7517E5E7/"]
+
+        response = random.choice(loops_list) 
+        attachments = {
+            "image_url": response
+        }
         logger.info(command)
         logger.info(response)
     else:
         response = default_response
-    return response
+    return (response, attachments)
 
 
 def signal_handler(sig_num, frame):
@@ -178,12 +194,14 @@ def main():
                     command, channel = parse_bot_commands(
                         slack_client.rtm_read())
                     if command:
-                        response = handle_command(command, channel)
+                        response = handle_command(command, channel)[0]
+                        attachments = handle_command(command, channel)[1]
                         # Sends the response back to the channel
                         slack_client.api_call(
                             "chat.postMessage",
                             channel=channel,
-                            text=response
+                            text=response,
+                            attachments=attachments
                         )
                     time.sleep(RTM_READ_DELAY)
                 except Exception as e:

@@ -202,3 +202,30 @@ INFO:__main__:The current bitcoin price in USD is 6,363.6100
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
 DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 187
 DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 192.225671053 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 261
+DEBUG:root:RTM connected
+INFO:__main__:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 163
+INFO:__main__:loops
+INFO:__main__:https://i.imgur.com/Ced9EYj.jpg
+INFO:__main__:loops
+INFO:__main__:https://i.imgur.com/CRkrxO9.jpg
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 184
+INFO:__main__:loops
+INFO:__main__:https://i.imgur.com/6CveK8A.jpg
+INFO:__main__:loops
+INFO:__main__:https://i.kym-cdn.com/photos/images/newsfeed/001/393/662/8dc.jpg
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 184
+INFO:__main__:loops
+INFO:__main__:https://i.imgur.com/YlfxtAY.jpg
+INFO:__main__:loops
+INFO:__main__:https://i.chzbgr.com/full/9206136064/h7517E5E7/
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 184
+DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 41.8990120888 seconds
