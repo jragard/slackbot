@@ -67,17 +67,17 @@ def handle_command(command, channel):
         # response = "Sure...write some more code then I can do that!"
         res = command[3:]
         response = res + " " + res + " " + res
-    if command == "exit":
+    elif command == "exit":
         response = "See ya later!"
         logger.info(command)
         logger.info('Starterbot is Disconnecting')
         exit_flag = True
-    if command == "ping":
+    elif command == "ping":
         response = "ryanbot is active, uptime = {} seconds".format(
             time.time() - start_time)
         logger.info(command)
         logger.info(response)
-    if command == "help":
+    elif command == "help":
         response = """Here is a list of commands:
         exit - Shut me down
         ping - Check my uptime
@@ -86,14 +86,19 @@ def handle_command(command, channel):
         bitcoin - Ask me the bitcoin price"""
         logger.info(command)
         logger.info(response)
-    if command == "bitcoin":
+    elif command == "bitcoin":
         r = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
         response = "The current bitcoin price in USD is {}".format(
             r.json()['bpi']['USD']['rate'])
         logger.info(command)
         logger.info(response)
-
-    return response or default_response
+    elif command == "loops":
+        response = "https://i.kym-cdn.com/photos/images/original/001/393/657/195.jpg"
+        logger.info(command)
+        logger.info(response)
+    else:
+        response = default_response
+    return response
 
 
 def signal_handler(sig_num, frame):
@@ -122,9 +127,6 @@ def setup_logging():
 
     # sets up logger
     logger = logging.getLogger()
-
-    # logger.setLevel(logging.DEBUG)
-    
     logger.setLevel(LOGGING_LEVEL)
 
     formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
@@ -145,7 +147,6 @@ def main():
     load_dotenv()
     setup_logging()
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
-    print 'SLACKBOT TOKEN type', type(SLACK_BOT_TOKEN)
     start_time = time.time()
 
     # instantiate Slack client

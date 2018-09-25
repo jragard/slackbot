@@ -160,3 +160,45 @@ DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
 DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 164
 DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 3.40129709244 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 260
+DEBUG:root:RTM connected
+INFO:__main__:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 163
+INFO:__main__:loops
+INFO:__main__:https://i.kym-cdn.com/photos/images/original/001/393/657/195.jpg
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 213
+INFO:__main__:loops
+INFO:__main__:https://i.kym-cdn.com/photos/images/original/001/393/657/195.jpg
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 213
+DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 249.112890005 seconds
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/rtm.connect HTTP/1.1" 200 261
+DEBUG:root:RTM connected
+INFO:__main__:StarterBot connected
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/auth.test HTTP/1.1" 200 129
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 164
+INFO:__main__:loops
+INFO:__main__:https://i.kym-cdn.com/photos/images/original/001/393/657/195.jpg
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 215
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.coindesk.com:443
+DEBUG:urllib3.connectionpool:https://api.coindesk.com:443 "GET /v1/bpi/currentprice.json HTTP/1.1" 200 None
+INFO:__main__:bitcoin
+INFO:__main__:The current bitcoin price in USD is 6,363.6100
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 187
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.coindesk.com:443
+DEBUG:urllib3.connectionpool:https://api.coindesk.com:443 "GET /v1/bpi/currentprice.json HTTP/1.1" 200 None
+INFO:__main__:bitcoin
+INFO:__main__:The current bitcoin price in USD is 6,363.6100
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): slack.com:443
+DEBUG:urllib3.connectionpool:https://slack.com:443 "POST /api/chat.postMessage HTTP/1.1" 200 187
+DEBUG:__main__:Received SIGINT, Disconnecting, uptime = 192.225671053 seconds
