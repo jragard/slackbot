@@ -7,6 +7,7 @@ import logging
 import random
 from dotenv import load_dotenv
 from slackclient import SlackClient
+from logging.handlers import RotatingFileHandler
 
 logger = logging.getLogger(__name__)
 
@@ -149,12 +150,13 @@ def setup_logging():
 
     file_handler = logging.FileHandler('slackbot.log')
     file_handler.setFormatter(formatter)
-
+    rotate_handler = logging.handlers.RotatingFileHandler('slackbot.log', maxBytes=2000, backupCount=3)
+    
     stream_handler = logging.StreamHandler()
 
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
-
+    logger.addHandler(rotate_handler)
 
 def main():
     global start_time
