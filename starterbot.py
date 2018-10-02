@@ -172,45 +172,45 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
 
-    try:
-        if slack_client.rtm_connect(with_team_state=False):
-            print("Starter Bot connected and running!")
-            logger.info('StarterBot connected')
+    while exit_flag is False:
+        try:
+            if slack_client.rtm_connect(with_team_state=False):
+                print("Starter Bot connected and running!")
+                logger.info('StarterBot connected')
 
-            # Read bot's user ID by calling Web API method `auth.test`
-            starterbot_id = slack_client.api_call("auth.test")["user_id"]
+                # Read bot's user ID by calling Web API method `auth.test`
+                starterbot_id = slack_client.api_call("auth.test")["user_id"]
 
-            # Send a message to a channel announcing bot is online
-            connect_message = "I am online!"
+                # Send a message to a channel announcing bot is online
+                connect_message = "I am online!"
 
-            slack_client.api_call(
-                "chat.postMessage",
-                channel="CCD7USCR0",
-                text=connect_message
-            )
+                slack_client.api_call(
+                    "chat.postMessage",
+                    channel="CCD7USCR0",
+                    text=connect_message
+                )
 
-            while exit_flag is False:
-                try:
-                    command, channel = parse_bot_commands(
-                        slack_client.rtm_read())
-                    if command:
-                        response = handle_command(command, channel)[0]
-                        attachments = handle_command(command, channel)[1]
-                        # Sends the response back to the channel
-                        slack_client.api_call(
-                            "chat.postMessage",
-                            channel=channel,
-                            text=response,
-                            attachments=attachments
-                        )
-                    time.sleep(RTM_READ_DELAY)
-                except Exception as e:
-                    logger.debug(e)
-                    time.sleep(5)
-        else:
-            print("Connection failed. Exception traceback printed above")
-    except Exception as failed_connection:
-        logger.debug(failed_connection)
+                while exit_flag is False:
+                    try:
+                        command, channel = parse_bot_commands(slack_client.rtm_read())
+                        if command:
+                            response = handle_command(command, channel)[0]
+                            attachments = handle_command(command, channel)[1]
+                            # Sends the response back to the channel
+                            slack_client.api_call(
+                                "chat.postMessage",
+                                channel=channel,
+                                text=response,
+                                attachments=attachments
+                            )
+                        time.sleep(RTM_READ_DELAY)
+                    except Exception as e:
+                        logger.debug(e)
+                        time.sleep(5)
+            else:
+                print("Connection failed. Exception traceback printed above")
+        except Exception as failed_connection:
+            logger.debug(failed_connection)
 
 
 if __name__ == "__main__":
