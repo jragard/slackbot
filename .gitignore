@@ -2,3 +2,4 @@
 .env
 starterbot/
 *.pyc
+*.log
